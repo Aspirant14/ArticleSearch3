@@ -21,7 +21,6 @@ fun createJson() = Json {
     ignoreUnknownKeys = true
     useAlternativeNames = false
 }
-
 private const val TAG = "MainActivity/"
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -33,28 +32,27 @@ class MainActivity : AppCompatActivity() {
         // It is important to place the R.id references after this line. Otherwise, they will not be
         // recognized.
         setContentView(view)
-        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
-
-        // Set default selection
-        bottomNavigationView.selectedItemId = R.id.BooksTab// handle navigation selection
-
+        // handle navigation selection
         val fragmentManager: FragmentManager = supportFragmentManager
-
         // define your fragments here
-        val fragment1: Fragment = Fragment()
-        val fragment2: Fragment = Fragment()
-
-        bottomNavigationView.setOnItemSelectedListener { item ->
+        val fragment1: Fragment = BestSellerBooksFragment()
+        val fragment2: Fragment = ArticleListFragment()
+        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
+        bottomNavigationView.setOnItemSelectedListener(){ item ->
+            lateinit var fragment: Fragment
             when (item.itemId) {
                 R.id.BooksTab ->
                     // do something here
-                    true
+                    fragment = fragment1
                 R.id.ArticlesTab ->
                     // do something here
-                    true
+                    fragment = fragment2
                 else -> true
             }
+            fragmentManager.beginTransaction().replace(R.id.clContainer, fragment).commit()
+            true
         }
+        // Set default selection
+        bottomNavigationView.selectedItemId = R.id.BooksTab
     }
 }
-// java.lang.NullPointerException: findViewById(R.id.bottom_navigation) must not be null

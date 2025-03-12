@@ -21,6 +21,9 @@ class ArticleListFragment : Fragment() {
     private val articles = mutableListOf<Article>()
     private lateinit var articlesRecyclerView: RecyclerView
     private lateinit var articleAdapter: ArticleAdapter
+    override fun onCreate(savedInstanceState: Bundle?){
+        super.onCreate(savedInstanceState)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,7 +54,6 @@ class ArticleListFragment : Fragment() {
             ){
                 Log.e(TAG, "Failed to fetch articles: $statusCode")
             }
-
             override fun onSuccess(statusCode: Int, headers: Headers, json: JSON) {
                 Log.i(TAG, "Successfully fetched articles: $json")
                 try {
